@@ -31,7 +31,6 @@
     }
 
     .tab.active {
-      background-color: #FF6F3C;
       color: #ffffff;
     }
 
@@ -39,6 +38,16 @@
       background-color: #444444;
       transform: scale(1.05);
     }
+
+    .tab[data-color="blue"] { background-color: #00A8F3; }
+    .tab[data-color="green"] { background-color: #00FF00; }
+    .tab[data-color="pink"] { background-color: #FF00FF; }
+    .tab[data-color="yellow"] { background-color: #FFFF00; }
+    .tab[data-color="cyan"] { background-color: #00FFFF; }
+    .tab[data-color="red"] { background-color: #FF0000; }
+    .tab[data-color="orange"] { background-color: #FF5A00; }
+    .tab[data-color="purple"] { background-color: #7A00FF; }
+    .tab[data-color="magenta"] { background-color: #FF00B3; }
 
     .content {
       max-width: 900px;
@@ -48,16 +57,6 @@
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       transition: opacity 0.3s ease-in-out;
-    }
-
-    .content h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .content p {
-      font-size: 18px;
-      line-height: 1.6;
     }
 
     .content button {
@@ -94,16 +93,15 @@
 </head>
 <body>
   <div class="tabs">
-    <div class="tab active" onclick="showContent('Dashboard')">Dashboard</div>
-    <div class="tab" onclick="showContent('ADDIE')">ADDIE</div>
-    <div class="tab" onclick="showContent('SAM')">SAM</div>
-    <div class="tab" onclick="showContent('Merrill')">Merrill's Principles</div>
-    <div class="tab" onclick="showContent('Blooms')">Bloom's Taxonomy</div>
-    <div class="tab" onclick="showContent('Backward')">Backward Design</div>
-    <div class="tab" onclick="showContent('Gagne')">Gagne's 9 Events</div>
-    <div class="tab" onclick="showContent('Action')">Action Mapping</div>
-    <div class="tab" onclick="showContent('Retention')">Learner Retention</div>
-    <div class="tab" onclick="showContent('702010')">70-20-10 Model</div>
+    <div class="tab active" data-color="blue" onclick="showContent('ADDIE')">ADDIE</div>
+    <div class="tab" data-color="green" onclick="showContent('SAM')">SAM</div>
+    <div class="tab" data-color="pink" onclick="showContent('Merrill')">Merrill's Principles</div>
+    <div class="tab" data-color="yellow" onclick="showContent('Blooms')">Bloom's Taxonomy</div>
+    <div class="tab" data-color="cyan" onclick="showContent('Backward')">Backward Design</div>
+    <div class="tab" data-color="red" onclick="showContent('Gagne')">Gagne's 9 Events</div>
+    <div class="tab" data-color="orange" onclick="showContent('Action')">Action Mapping</div>
+    <div class="tab" data-color="purple" onclick="showContent('Retention')">Learner Retention</div>
+    <div class="tab" data-color="magenta" onclick="showContent('702010')">70-20-10 Model</div>
   </div>
 
   <div class="content" id="content">
@@ -131,29 +129,19 @@
       const content = document.getElementById('content');
       const confirmMessage = document.getElementById('confirmation');
 
-      if (model === 'Dashboard') {
-        content.innerHTML = `
-          <h2>Dashboard</h2>
-          <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
-        `;
-      } else {
-        content.innerHTML = `
-          <button onclick="openTemplate('${model}')">Use this Template</button>
-          <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false"></iframe>
-        `;
-      }
+      content.innerHTML = `
+        <button onclick="openTemplate('${model}')">Use this Template</button>
+        <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false"></iframe>
+      `;
 
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-      document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
+      const activeTab = document.querySelector(`[onclick="showContent('${model}')"]`);
+      activeTab.classList.add('active');
+      activeTab.style.backgroundColor = activeTab.getAttribute('data-color');
     }
 
     function openTemplate(model) {
-      const confirmMessage = document.getElementById('confirmation');
-      confirmMessage.style.display = "block";
-      setTimeout(() => {
-        confirmMessage.style.display = "none";
-        window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit`, '_blank');
-      }, 800);
+      window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit#gid=${gids[model]}`, '_blank');
     }
   </script>
 </body>
