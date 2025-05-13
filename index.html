@@ -15,10 +15,11 @@
 
     .tabs {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       gap: 15px;
-      margin-bottom: 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
     .tab {
@@ -27,6 +28,9 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.4;
     }
 
     .tab.active {
@@ -46,12 +50,21 @@
     }
 
     .content h2 {
-      font-size: 24px;
+      font-size: 36px;
       margin-bottom: 15px;
     }
 
     .content p {
-      font-size: 18px;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    iframe {
+      width: 100%;
+      height: 400px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -72,36 +85,20 @@
   <div class="content" id="content">
     <h2>Dashboard</h2>
     <p>Welcome to the Instructional Design Dashboard. Choose a model to view details.</p>
+    <iframe src="" id="sheetFrame"></iframe>
   </div>
 
   <script>
     function showContent(model) {
       const content = document.getElementById('content');
-      let text = "";
+      const iframe = document.getElementById('sheetFrame');
 
       if (model === 'Dashboard') {
-        text = "Welcome to the Instructional Design Dashboard. Choose a model to view details.";
-      } else if (model === 'ADDIE') {
-        text = "ADDIE is a systematic model for instructional design.";
-      } else if (model === 'SAM') {
-        text = "SAM is a flexible, iterative model for course design.";
-      } else if (model === 'Merrill') {
-        text = "Merrill's Principles focus on task-centered learning.";
-      } else if (model === 'Blooms') {
-        text = "Bloom's Taxonomy categorizes learning objectives by complexity.";
-      } else if (model === 'Gagne') {
-        text = "Gagne's 9 Events guide effective lesson delivery.";
-      } else if (model === 'Backward') {
-        text = "Backward Design starts with defining learning outcomes first.";
-      } else if (model === 'Action') {
-        text = "Action Mapping focuses on creating realistic practice activities.";
-      } else if (model === 'Retention') {
-        text = "Learner Retention focuses on ensuring knowledge is remembered.";
-      } else if (model === '70-20-10') {
-        text = "The 70-20-10 Model emphasizes experience, social, and formal learning.";
+        content.innerHTML = `<h2>Dashboard</h2><p>Welcome to the Instructional Design Dashboard. Choose a model to view details.</p><iframe src="" id="sheetFrame"></iframe>`;
+      } else {
+        content.innerHTML = `<h2>${model}</h2><p>Loading content...</p><iframe src="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit#gid=0" id="sheetFrame"></iframe>`;
       }
 
-      content.innerHTML = `<h2>${model}</h2><p>${text}</p>`;
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
     }
