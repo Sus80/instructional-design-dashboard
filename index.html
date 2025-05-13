@@ -15,60 +15,70 @@
 
     .tabs {
       display: flex;
-      flex-wrap: nowrap;
       justify-content: center;
       gap: 15px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      margin-bottom: 20px;
     }
 
     .tab {
-      background-color: #4A4A4A;
-      padding: 12px 18px;
-      border-radius: 10px;
+      background-color: #2C2C2C;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      white-space: normal;
-      text-align: center;
-      line-height: 1.4;
+      color: #ffffff;
+    }
+
+    .tab.active {
+      background-color: #FF6F3C;
+      color: #ffffff;
     }
 
     .tab:hover {
-      background-color: #FFC857;
-      transform: scale(1.05);
+      background-color: #444444;
     }
 
-    .tab:nth-child(1) { background-color: #6A98F0; }  /* ADDIE */
-    .tab:nth-child(2) { background-color: #8EC07C; }  /* SAM */
-    .tab:nth-child(3) { background-color: #C586D0; }  /* Merrill's Principles */
-    .tab:nth-child(4) { background-color: #F4D06F; }  /* Bloom's Taxonomy */
-    .tab:nth-child(5) { background-color: #5FB3B3; }  /* Backward Design */
-    .tab:nth-child(6) { background-color: #F28C8C; }  /* Gagne's 9 Events */
-    .tab:nth-child(7) { background-color: #FF6F91; }  /* Action Mapping */
-    .tab:nth-child(8) { background-color: #6CCFF6; }  /* Learner Retention */
-    .tab:nth-child(9) { background-color: #FFA726; } /* 70-20-10 Model */
-    
     .content {
-      margin-top: 20px;
-      max-width: 100%;
-      height: 90vh;
-      padding: 20px;
+      max-width: 800px;
+      margin: auto;
       background-color: #2C2C2C;
-      border-radius: 10px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.3s ease-in-out;
     }
 
-    iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
+    .content h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .content button {
       margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #FF6F3C;
+      color: #ffffff;
+      border: none;
       border-radius: 10px;
-      transition: opacity 0.3s ease-in-out;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .content button:hover {
+      background-color: #FFA726;
     }
   </style>
 </head>
 <body>
   <div class="tabs">
+    <div class="tab active" onclick="showContent('Dashboard')">Dashboard</div>
     <div class="tab" onclick="showContent('ADDIE')">ADDIE</div>
     <div class="tab" onclick="showContent('SAM')">SAM</div>
     <div class="tab" onclick="showContent('Merrill')">Merrill's Principles</div>
@@ -81,33 +91,51 @@
   </div>
 
   <div class="content" id="content">
-    <iframe src="" id="sheetFrame"></iframe>
+    <h2>Dashboard</h2>
+    <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
+    <button onclick="openTemplate()">Use this Template</button>
   </div>
 
   <script>
-    function showContent(model) {
-      const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
-      const gids = {
-        'ADDIE': '404581032',
-        'SAM': '2039657383',
-        'Merrill': '1890133525',
-        'Blooms': '588809985',
-        'Backward': '1891183429',
-        'Gagne': '1716457675',
-        'Action': '2073042167',
-        'Retention': '424513403',
-        '702010': '233006912'
-      };
+    const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
+    const gids = {
+      'ADDIE': '404581032',
+      'SAM': '2039657383',
+      'Merrill': '1890133525',
+      'Blooms': '588809985',
+      'Backward': '1891183429',
+      'Gagne': '1716457675',
+      'Action': '2073042167',
+      'Retention': '424513403',
+      '702010': '233006912'
+    };
 
-      const iframe = document.getElementById('sheetFrame');
-      iframe.style.opacity = "0"; // Smooth transition
-      setTimeout(() => {
-        iframe.src = `https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false`;
-        iframe.style.opacity = "1";
-      }, 300);
+    function showContent(model) {
+      const content = document.getElementById('content');
+      if (model === 'Dashboard') {
+        content.innerHTML = `
+          <h2>Dashboard</h2>
+          <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
+          <button onclick="openTemplate()">Use this Template</button>
+        `;
+      } else {
+        content.innerHTML = `
+          <h2>${model}</h2>
+          <p>Explore the ${model} model below.</p>
+          <button onclick="openSheet('${model}')">Go to Tab</button>
+        `;
+      }
 
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
+    }
+
+    function openSheet(model) {
+      window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit#gid=${gids[model]}`, '_blank');
+    }
+
+    function openTemplate() {
+      window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit`, '_blank');
     }
   </script>
 </body>
