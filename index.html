@@ -21,13 +21,14 @@
     }
 
     .tab {
-      background-color: #2C2C2C;
+      background-color: #383838;
       padding: 10px 20px;
       border-radius: 12px;
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
       color: #ffffff;
+      border: 2px solid transparent;
     }
 
     .tab.active {
@@ -70,13 +71,6 @@
       opacity: 0.9;
     }
 
-    .confirm {
-      display: none;
-      font-size: 16px;
-      color: #00FF00;
-      margin-bottom: 10px;
-    }
-
     iframe {
       width: 100%;
       height: 80vh;
@@ -103,8 +97,6 @@
     <h2>Dashboard</h2>
     <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
   </div>
-
-  <p class="confirm" id="confirmation">Opening Template in a New Tab...</p>
 
   <script>
     const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
@@ -133,7 +125,6 @@
       const activeTab = document.querySelector(`[onclick="showContent('${model}')"]`);
       activeTab.classList.add('active');
       activeTab.style.backgroundColor = color;
-      activeTab.style.color = (color === "#FFFF00" || color === "#00FFFF") ? "#383838" : "#ffffff";
     }
 
     function openTemplate(model) {
