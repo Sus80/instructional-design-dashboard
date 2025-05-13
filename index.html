@@ -26,8 +26,14 @@
       border-radius: 12px;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
       color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .tab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
     }
 
     .tab.active {
@@ -125,11 +131,13 @@
       document.querySelectorAll('.tab').forEach(tab => {
         tab.style.backgroundColor = "#383838";
         tab.style.color = "#ffffff";
+        tab.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.3)";
       });
 
       const activeTab = document.querySelector(`[onclick="showContent('${model}')"]`);
       activeTab.style.backgroundColor = color;
       activeTab.style.color = (color === "#FFFF00" || color === "#00FFFF") ? "#383838" : "#ffffff";
+      activeTab.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.5)";
     }
 
     function openTemplate(model) {
