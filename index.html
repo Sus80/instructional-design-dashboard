@@ -45,9 +45,22 @@
       max-width: 900px;
       margin: auto;
       background-color: #2C2C2C;
-      padding: 20px;
+      padding: 40px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .content h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .content p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #E0E0E0;
     }
 
     .content button {
@@ -77,20 +90,21 @@
 </head>
 <body>
   <div class="tabs">
-    <div class="tab" onclick="showContent('ADDIE')">ADDIE</div>
-    <div class="tab" onclick="showContent('SAM')">SAM</div>
-    <div class="tab" onclick="showContent('Merrill')">Merrill's Principles</div>
-    <div class="tab" onclick="showContent('Blooms')">Bloom's Taxonomy</div>
-    <div class="tab" onclick="showContent('Backward')">Backward Design</div>
-    <div class="tab" onclick="showContent('Gagne')">Gagne's 9 Events</div>
-    <div class="tab" onclick="showContent('Action')">Action Mapping</div>
-    <div class="tab" onclick="showContent('Retention')">Learner Retention</div>
-    <div class="tab" onclick="showContent('702010')">70-20-10 Model</div>
+    <div class="tab" onclick="showContent('Dashboard')">Dashboard</div>
+    <div class="tab" onclick="showContent('ADDIE')" data-color="#4A90E2">ADDIE</div>
+    <div class="tab" onclick="showContent('SAM')" data-color="#50E3C2">SAM</div>
+    <div class="tab" onclick="showContent('Merrill')" data-color="#FF6EC7">Merrill's Principles</div>
+    <div class="tab" onclick="showContent('Blooms')" data-color="#FFD166">Bloom's Taxonomy</div>
+    <div class="tab" onclick="showContent('Backward')" data-color="#7FDBFF">Backward Design</div>
+    <div class="tab" onclick="showContent('Gagne')" data-color="#FF5E5E">Gagne's 9 Events</div>
+    <div class="tab" onclick="showContent('Action')" data-color="#FF9F43">Action Mapping</div>
+    <div class="tab" onclick="showContent('Retention')" data-color="#B88DF1">Learner Retention</div>
+    <div class="tab" onclick="showContent('702010')" data-color="#EF5DA8">70-20-10 Model</div>
   </div>
 
   <div class="content" id="content">
-    <h2>Dashboard</h2>
-    <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
+    <h1>Dashboard</h1>
+    <p>Welcome to the Instructional Design Dashboard.<br>Select a model to view and use the templates.</p>
   </div>
 
   <script>
@@ -107,37 +121,30 @@
       '702010': '233006912'
     };
 
-    const tabColors = {
-      'ADDIE': '#00A8F3',
-      'SAM': '#00FF00',
-      'Merrill': '#FF00FF',
-      'Blooms': '#FFFF00',
-      'Backward': '#00FFFF',
-      'Gagne': '#FF0000',
-      'Action': '#FF5A00',
-      'Retention': '#7A00FF',
-      '702010': '#FF00B3'
-    };
-
     function showContent(model) {
       const content = document.getElementById('content');
-      const color = tabColors[model];
+      const tab = document.querySelector(`[onclick="showContent('${model}')"]`);
+      const color = tab.getAttribute('data-color');
 
-      content.innerHTML = `
-        <button style="background-color: ${color}; color: #ffffff;" onclick="openTemplate('${model}')">Use this Template</button>
-        <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false"></iframe>
-      `;
+      if (model === 'Dashboard') {
+        content.innerHTML = `
+          <h1>Dashboard</h1>
+          <p>Welcome to the Instructional Design Dashboard.<br>Select a model to view and use the templates.</p>
+        `;
+      } else {
+        content.innerHTML = `
+          <button style="background-color: ${color};" onclick="openTemplate('${model}')">Use this Template</button>
+          <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false"></iframe>
+        `;
+      }
 
       document.querySelectorAll('.tab').forEach(tab => {
         tab.style.backgroundColor = "#383838";
         tab.style.color = "#ffffff";
-        tab.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.3)";
       });
 
-      const activeTab = document.querySelector(`[onclick="showContent('${model}')"]`);
-      activeTab.style.backgroundColor = color;
-      activeTab.style.color = (color === "#FFFF00" || color === "#00FFFF") ? "#383838" : "#ffffff";
-      activeTab.style.boxShadow = "0 6px 12px rgba(0, 0, 0, 0.5)";
+      tab.style.backgroundColor = color;
+      tab.style.color = "#383838";
     }
 
     function openTemplate(model) {
