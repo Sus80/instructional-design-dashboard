@@ -27,77 +27,84 @@
       padding: 12px 18px;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
       white-space: normal;
       text-align: center;
       line-height: 1.4;
     }
 
-    .tab.active {
-      background-color: #FF6F3C;
-    }
-
     .tab:hover {
-      background-color: #5C5C5C;
+      background-color: #FFC857;
+      transform: scale(1.05);
     }
 
+    .tab:nth-child(1) { background-color: #6A98F0; }  /* ADDIE */
+    .tab:nth-child(2) { background-color: #8EC07C; }  /* SAM */
+    .tab:nth-child(3) { background-color: #C586D0; }  /* Merrill's Principles */
+    .tab:nth-child(4) { background-color: #F4D06F; }  /* Bloom's Taxonomy */
+    .tab:nth-child(5) { background-color: #5FB3B3; }  /* Backward Design */
+    .tab:nth-child(6) { background-color: #F28C8C; }  /* Gagne's 9 Events */
+    .tab:nth-child(7) { background-color: #FF6F91; }  /* Action Mapping */
+    .tab:nth-child(8) { background-color: #6CCFF6; }  /* Learner Retention */
+    .tab:nth-child(9) { background-color: #FFA726; } /* 70-20-10 Model */
+    
     .content {
       margin-top: 20px;
-      max-width: 800px;
+      max-width: 100%;
+      height: 90vh;
       padding: 20px;
       background-color: #2C2C2C;
       border-radius: 10px;
     }
 
-    .content h2 {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .content p {
-      font-size: 20px;
-      line-height: 1.6;
-    }
-
     iframe {
       width: 100%;
-      height: 400px;
+      height: 90vh;
       border: none;
       margin-top: 20px;
       border-radius: 10px;
+      transition: opacity 0.3s ease-in-out;
     }
   </style>
 </head>
 <body>
   <div class="tabs">
-    <div class="tab active" onclick="showContent('Dashboard')">Dashboard</div>
     <div class="tab" onclick="showContent('ADDIE')">ADDIE</div>
     <div class="tab" onclick="showContent('SAM')">SAM</div>
     <div class="tab" onclick="showContent('Merrill')">Merrill's Principles</div>
     <div class="tab" onclick="showContent('Blooms')">Bloom's Taxonomy</div>
-    <div class="tab" onclick="showContent('Gagne')">Gagne's 9 Events</div>
     <div class="tab" onclick="showContent('Backward')">Backward Design</div>
+    <div class="tab" onclick="showContent('Gagne')">Gagne's 9 Events</div>
     <div class="tab" onclick="showContent('Action')">Action Mapping</div>
     <div class="tab" onclick="showContent('Retention')">Learner Retention</div>
-    <div class="tab" onclick="showContent('70-20-10')">70-20-10 Model</div>
+    <div class="tab" onclick="showContent('702010')">70-20-10 Model</div>
   </div>
 
   <div class="content" id="content">
-    <h2>Dashboard</h2>
-    <p>Welcome to the Instructional Design Dashboard. Choose a model to view details.</p>
- <iframe src="https://docs.google.com/spreadsheets/d/1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg/htmlembed?gid=285413084&single=true&widget=true&headers=false" id="sheetFrame"></iframe>
+    <iframe src="" id="sheetFrame"></iframe>
   </div>
 
   <script>
     function showContent(model) {
-      const content = document.getElementById('content');
-      const iframe = document.getElementById('sheetFrame');
+      const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
+      const gids = {
+        'ADDIE': '404581032',
+        'SAM': '2039657383',
+        'Merrill': '1890133525',
+        'Blooms': '588809985',
+        'Backward': '1891183429',
+        'Gagne': '1716457675',
+        'Action': '2073042167',
+        'Retention': '424513403',
+        '702010': '233006912'
+      };
 
-      if (model === 'Dashboard') {
-        content.innerHTML = `<h2>Dashboard</h2><p>Welcome to the Instructional Design Dashboard. Choose a model to view details.</p><iframe src="" id="sheetFrame"></iframe>`;
-      } else {
-        content.innerHTML = `<h2>${model}</h2><p>Loading content...</p><iframe src="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit#gid=0" id="sheetFrame"></iframe>`;
-      }
+      const iframe = document.getElementById('sheetFrame');
+      iframe.style.opacity = "0"; // Smooth transition
+      setTimeout(() => {
+        iframe.src = `https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false`;
+        iframe.style.opacity = "1";
+      }, 300);
 
       document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
