@@ -37,13 +37,14 @@
 
     .tab:hover {
       background-color: #444444;
+      transform: scale(1.05);
     }
 
     .content {
-      max-width: 800px;
+      max-width: 900px;
       margin: auto;
       background-color: #2C2C2C;
-      padding: 30px;
+      padding: 20px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       transition: opacity 0.3s ease-in-out;
@@ -60,7 +61,7 @@
     }
 
     .content button {
-      margin-top: 20px;
+      margin-bottom: 15px;
       padding: 10px 20px;
       background-color: #FF6F3C;
       color: #ffffff;
@@ -73,6 +74,21 @@
 
     .content button:hover {
       background-color: #FFA726;
+    }
+
+    .confirm {
+      display: none;
+      font-size: 16px;
+      color: #00FF00;
+      margin-bottom: 10px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+      margin-top: 15px;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -93,8 +109,9 @@
   <div class="content" id="content">
     <h2>Dashboard</h2>
     <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
-    <button onclick="openTemplate()">Use this Template</button>
   </div>
+
+  <p class="confirm" id="confirmation">Opening Template in a New Tab...</p>
 
   <script>
     const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
@@ -112,17 +129,17 @@
 
     function showContent(model) {
       const content = document.getElementById('content');
+      const confirmMessage = document.getElementById('confirmation');
+
       if (model === 'Dashboard') {
         content.innerHTML = `
           <h2>Dashboard</h2>
           <p>Welcome to the Instructional Design Dashboard.<br>Choose a model to view details.</p>
-          <button onclick="openTemplate()">Use this Template</button>
         `;
       } else {
         content.innerHTML = `
-          <h2>${model}</h2>
-          <p>Explore the ${model} model below.</p>
-          <button onclick="openSheet('${model}')">Go to Tab</button>
+          <button onclick="openTemplate('${model}')">Use this Template</button>
+          <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gids[model]}&single=true&widget=true&headers=false"></iframe>
         `;
       }
 
@@ -130,12 +147,13 @@
       document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
     }
 
-    function openSheet(model) {
-      window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit#gid=${gids[model]}`, '_blank');
-    }
-
-    function openTemplate() {
-      window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit`, '_blank');
+    function openTemplate(model) {
+      const confirmMessage = document.getElementById('confirmation');
+      confirmMessage.style.display = "block";
+      setTimeout(() => {
+        confirmMessage.style.display = "none";
+        window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit`, '_blank');
+      }, 800);
     }
   </script>
 </body>
