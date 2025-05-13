@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instructional Design Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #383838;
+      color: white;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      background-color: #4A4A4A;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .tab.active {
+      background-color: #FF6F3C;
+    }
+
+    .tab:hover {
+      background-color: #5C5C5C;
+    }
+
+    .content {
+      margin-top: 20px;
+      max-width: 800px;
+      padding: 20px;
+      background-color: #2C2C2C;
+      border-radius: 10px;
+    }
+
+    .content h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .content p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <div class="tab active" onclick="showContent('Dashboard')">Dashboard</div>
+    <div class="tab" onclick="showContent('ADDIE')">ADDIE</div>
+    <div class="tab" onclick="showContent('SAM')">SAM</div>
+    <div class="tab" onclick="showContent('Merrill')">Merrill's Principles</div>
+    <div class="tab" onclick="showContent('Blooms')">Bloom's Taxonomy</div>
+    <div class="tab" onclick="showContent('Gagne')">Gagne's 9 Events</div>
+    <div class="tab" onclick="showContent('Backward')">Backward Design</div>
+    <div class="tab" onclick="showContent('Action')">Action Mapping</div>
+    <div class="tab" onclick="showContent('Retention')">Learner Retention</div>
+    <div class="tab" onclick="showContent('70-20-10')">70-20-10 Model</div>
+  </div>
+
+  <div class="content" id="content">
+    <h2>Dashboard</h2>
+    <p>Welcome to the Instructional Design Dashboard. Choose a model to view details.</p>
+  </div>
+
+  <script>
+    function showContent(model) {
+      const content = document.getElementById('content');
+      let text = "";
+
+      if (model === 'Dashboard') {
+        text = "Welcome to the Instructional Design Dashboard. Choose a model to view details.";
+      } else if (model === 'ADDIE') {
+        text = "ADDIE is a systematic model for instructional design.";
+      } else if (model === 'SAM') {
+        text = "SAM is a flexible, iterative model for course design.";
+      } else if (model === 'Merrill') {
+        text = "Merrill's Principles focus on task-centered learning.";
+      } else if (model === 'Blooms') {
+        text = "Bloom's Taxonomy categorizes learning objectives by complexity.";
+      } else if (model === 'Gagne') {
+        text = "Gagne's 9 Events guide effective lesson delivery.";
+      } else if (model === 'Backward') {
+        text = "Backward Design starts with defining learning outcomes first.";
+      } else if (model === 'Action') {
+        text = "Action Mapping focuses on creating realistic practice activities.";
+      } else if (model === 'Retention') {
+        text = "Learner Retention focuses on ensuring knowledge is remembered.";
+      } else if (model === '70-20-10') {
+        text = "The 70-20-10 Model emphasizes experience, social, and formal learning.";
+      }
+
+      content.innerHTML = `<h2>${model}</h2><p>${text}</p>`;
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`[onclick="showContent('${model}')"]`).classList.add('active');
+    }
+  </script>
+</body>
+</html>
