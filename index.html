@@ -116,24 +116,38 @@
   </div>
 
   <script>
-    function showContent(model) {
-      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-      const selectedTab = document.querySelector(`[onclick="showContent('${model}')"]`);
-      selectedTab.classList.add('active');
+  const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
+  const gids = {
+    'ADDIE': '404581032',
+    'SAM': '2039657383',
+    'Merrill': '1890133525',
+    'Blooms': '588809985',
+    'Backward': '1891183429',
+    'Gagne': '1716457675',
+    'Action': '2073042167',
+    'Retention': '424513403',
+    '702010': '233006912'
+  };
 
-      const content = document.getElementById('content');
-      if (model === 'Dashboard') {
-        content.innerHTML = `
-          <h1>Dashboard</h1>
-          <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
-        `;
-      } else {
-        content.innerHTML = `
-          <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff; border-radius: 10px;">Use this Template</button>
-          <iframe src="https://docs.google.com/spreadsheets/d/1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg/htmlembed?gid=404581032&single=true&widget=true&headers=false"></iframe>
-        `;
-      }
+  function showContent(model) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    const selectedTab = document.querySelector(`[onclick="showContent('${model}')"]`);
+    selectedTab.classList.add('active');
+
+    const content = document.getElementById('content');
+    if (model === 'Dashboard') {
+      content.innerHTML = `
+        <h1>Dashboard</h1>
+        <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+      `;
+    } else {
+      const gid = gids[model];
+      content.innerHTML = `
+        <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff; border-radius: 10px;">Use this Template</button>
+        <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gid}&single=true&widget=true&headers=false"></iframe>
+      `;
     }
-  </script>
+  }
+</script>
 </body>
 </html>
