@@ -147,7 +147,7 @@
     </div>
   </div>
 
-  <script>
+<script>
   const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
   const gids = {
     'ADDIE': '404581032',
@@ -167,20 +167,21 @@
     selectedTab.classList.add('active');
 
     const content = document.getElementById('content');
+    
     if (model === 'Dashboard') {
       content.innerHTML = `
-        <div class="dashboard">
-          <img src="min_map_icon.png" alt="Instructional Design Diagram" style="max-width: 200px; height: auto; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-          <div class="dashboard-text">
-            <h1>Dashboard</h1>
-            <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+        <div class="dashboard" style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 30px;">
+          <img src="min_map_icon.png" alt="Instructional Design Diagram" style="max-width: 250px; height: auto; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+          <div class="dashboard-text" style="text-align: left; max-width: 400px;">
+            <h1 style="font-size: 40px; font-weight: bold;">Dashboard</h1>
+            <p style="font-size: 20px; line-height: 1.6; color: #E0E0E0;">Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
           </div>
         </div>
       `;
     } else {
       const gid = gids[model];
       content.innerHTML = `
-        <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff; border-radius: 10px;">Use this Template</button>
+        <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff; border-radius: 10px; margin-bottom: 15px;">Use this Template</button>
         <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gid}&single=true&widget=true&headers=false" style="width: 100%; height: 80vh; border: none; margin-top: 15px; border-radius: 10px;"></iframe>
       `;
     }
