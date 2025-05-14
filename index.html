@@ -110,9 +110,9 @@
       padding: 10px 20px;
       background-color: #4A90E2;
       color: #ffffff;
+      font-weight: bold;
       border: none;
       border-radius: 10px;
-      font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s;
     }
@@ -125,7 +125,7 @@
       width: 100%;
       height: 80vh;
       border: none;
-      margin-top: 15px;
+      margin-top: 10px;
       border-radius: 10px;
     }
   </style>
@@ -171,7 +171,7 @@
         `;
       } else {
         content.innerHTML = `
-          <button style="background-color: ${selectedTab.getAttribute('data-color')};" onclick="openTemplate('${model}')">Use this Template</button>
+          <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff;">Use this Template</button>
           <iframe src="https://docs.google.com/spreadsheets/d/1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg/htmlembed?gid=404581032&single=true&widget=true&headers=false"></iframe>
         `;
       }
