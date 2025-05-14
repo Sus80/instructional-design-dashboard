@@ -27,14 +27,21 @@
       font-weight: 400;
       cursor: pointer;
       text-align: center;
-      transition: background-color 0.3s, border-bottom 0.3s;
+      transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
       color: #ffffff;
       border-bottom: 4px solid transparent;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .tab:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
 
     .tab.active {
       font-weight: bold;
       border-bottom: 4px solid;
+      transform: translateY(0);
     }
 
     .tab[data-color="#4A90E2"].active { border-bottom-color: #4A90E2; }
@@ -47,6 +54,47 @@
     .tab[data-color="#B88DF1"].active { border-bottom-color: #B88DF1; }
     .tab[data-color="#EF5DA8"].active { border-bottom-color: #EF5DA8; }
 
+    .dashboard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px;
+      background-color: #2C2C2C;
+      border-radius: 15px;
+      max-width: 900px;
+      margin: 50px auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      max-width: 500px;
+    }
+
+    .dashboard-text h1 {
+      font-size: 40px;
+      font-weight: bold;
+      margin: 0;
+      color: white;
+    }
+
+    .dashboard-text p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #E0E0E0;
+      margin-top: 10px;
+    }
+
     .content {
       max-width: 900px;
       margin: auto;
@@ -55,17 +103,6 @@
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       transition: all 0.3s;
-    }
-
-    .content h1 {
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .content p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #E0E0E0;
     }
 
     .content button {
@@ -107,37 +144,37 @@
     <div class="tab" onclick="showContent('702010')" data-color="#EF5DA8">70-20-10 Model</div>
   </div>
 
-  <div class="content" id="content">
-    <h1>Dashboard</h1>
-    <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+  <div id="content" class="dashboard">
+    <img src="min_map_icon.png" alt="Instructional Design Diagram">
+    <div class="dashboard-text">
+      <h1>Dashboard</h1>
+      <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+    </div>
   </div>
 
   <script>
     function showContent(model) {
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-      });
-
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
       const selectedTab = document.querySelector(`[onclick="showContent('${model}')"]`);
       selectedTab.classList.add('active');
 
       const content = document.getElementById('content');
       if (model === 'Dashboard') {
         content.innerHTML = `
-          <h1>Dashboard</h1>
-          <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+          <div class="dashboard">
+            <img src="min_map_icon.png" alt="Instructional Design Diagram">
+            <div class="dashboard-text">
+              <h1>Dashboard</h1>
+              <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+            </div>
+          </div>
         `;
       } else {
-        const color = selectedTab.getAttribute('data-color');
         content.innerHTML = `
-          <button style="background-color: ${color};" onclick="openTemplate('${model}')">Use this Template</button>
+          <button style="background-color: ${selectedTab.getAttribute('data-color')};" onclick="openTemplate('${model}')">Use this Template</button>
           <iframe src="https://docs.google.com/spreadsheets/d/1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg/htmlembed?gid=404581032&single=true&widget=true&headers=false"></iframe>
         `;
       }
-    }
-
-    function openTemplate(model) {
-      window.open(`https://docs.google.com/spreadsheets/d/1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg/edit#gid=404581032`, '_blank');
     }
   </script>
 </body>
