@@ -54,6 +54,47 @@
     .tab[data-color="#B88DF1"].active { border-bottom-color: #B88DF1; }
     .tab[data-color="#EF5DA8"].active { border-bottom-color: #EF5DA8; }
 
+    .dashboard {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px;
+      background-color: #2C2C2C;
+      border-radius: 15px;
+      max-width: 900px;
+      margin: 50px auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard img {
+      max-width: 200px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .dashboard-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      max-width: 500px;
+    }
+
+    .dashboard-text h1 {
+      font-size: 40px;
+      font-weight: bold;
+      margin: 0;
+      color: white;
+    }
+
+    .dashboard-text p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #E0E0E0;
+      margin-top: 10px;
+    }
+
     .content {
       max-width: 900px;
       margin: auto;
@@ -61,12 +102,7 @@
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
     }
 
     .content button {
@@ -79,8 +115,6 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
-      display: inline-block;
-      align-self: center;
     }
 
     .content button:hover {
@@ -110,44 +144,35 @@
     <div class="tab" onclick="showContent('702010')" data-color="#EF5DA8">70-20-10 Model</div>
   </div>
 
-  <div id="content" class="content">
-    <h1>Dashboard</h1>
-    <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+  <div id="content" class="dashboard">
+    <img src="min_map_icon.png" alt="Instructional Design Diagram">
+    <div class="dashboard-text">
+      <h1>Dashboard</h1>
+      <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
+    </div>
   </div>
 
   <script>
-  const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
-  const gids = {
-    'ADDIE': '404581032',
-    'SAM': '2039657383',
-    'Merrill': '1890133525',
-    'Blooms': '588809985',
-    'Backward': '1891183429',
-    'Gagne': '1716457675',
-    'Action': '2073042167',
-    'Retention': '424513403',
-    '702010': '233006912'
-  };
+    const sheetId = "1qaCdmY_dPC0V1BZPIdWDtiNBv9ODgRDDFp47auniWSg";
+    const gids = {
+      'ADDIE': '404581032',
+      'SAM': '2039657383',
+      'Merrill': '1890133525',
+      'Blooms': '588809985',
+      'Backward': '1891183429',
+      'Gagne': '1716457675',
+      'Action': '2073042167',
+      'Retention': '424513403',
+      '702010': '233006912'
+    };
 
-  function showContent(model) {
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    const selectedTab = document.querySelector(`[onclick="showContent('${model}')"]`);
-    selectedTab.classList.add('active');
-
-    const content = document.getElementById('content');
-    if (model === 'Dashboard') {
-      content.innerHTML = `
-        <h1>Dashboard</h1>
-        <p>Welcome to the Instructional Design Dashboard<br>Choose a model to view details</p>
-      `;
-    } else {
+    function showContent(model) {
       const gid = gids[model];
-      content.innerHTML = `
-        <button style="background-color: ${selectedTab.getAttribute('data-color')}; font-weight: bold; color: #ffffff; border-radius: 10px;">Use this Template</button>
+      document.getElementById('content').innerHTML = `
+        <button style="background-color: #4A90E2; font-weight: bold; color: #ffffff; border-radius: 10px;">Use this Template</button>
         <iframe src="https://docs.google.com/spreadsheets/d/${sheetId}/htmlembed?gid=${gid}&single=true&widget=true&headers=false"></iframe>
       `;
     }
-  }
-</script>
+  </script>
 </body>
 </html>
